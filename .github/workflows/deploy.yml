@@ -29,7 +29,8 @@ jobs:
     services:
       mongo-label:
         image: mongo
-        ports: 27017:27017 #27017 port of service container will open for runner machine on port 27017.
+        ports: 
+          - 27017:27017 #27017 port of service container will open for runner machine on port 27017.
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example 
