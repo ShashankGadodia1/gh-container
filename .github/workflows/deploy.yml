@@ -19,7 +19,9 @@ jobs:
       #MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
       #MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       # Passing MongoDB Service Container label to communicate with Node Container.
-      MONGODB_CLUSTER_ADDRESS: mongo-label
+      #MONGODB_CLUSTER_ADDRESS: mongo-label
+      # Providing Cluster details to execute on Runner Machine
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: example
       PORT: 8080
@@ -27,6 +29,7 @@ jobs:
     services:
       mongo-label:
         image: mongo
+        port: 27017:27017 #27017 port of service container will open for runner machine on port 27017.
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example 
