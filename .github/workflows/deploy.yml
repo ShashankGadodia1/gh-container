@@ -14,13 +14,14 @@ jobs:
     # You will find this image on hub.docker.com
     container: node:16 
     env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
+      MONGODB_CONNECTION_PROTOCOL: mongodb
       #MONGODB_CLUSTER_ADDRESS: cluster0.dxag2nq.mongodb.net
       #MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
       #MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      # Passing MongoDB Service Container label to communicate with Node Container.
       MONGODB_CLUSTER_ADDRESS: mongo-label
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: example
       PORT: 8080
     # Service Container - MongoDB 
     services:
@@ -40,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:$PORT # requires MongoDB Atlas to accept requests from anywhere!
+        run: npm start & npx wait-on http://127.0.0.1:${{env.PORT}} # requires MongoDB Atlas to accept requests from anywhere!
       - name: Run tests
         run: npm test
       - name: Output information
